@@ -43,7 +43,7 @@ def main(input):
         comp_val = int(items[6])
         if compare(comp_register, comp_op, comp_val):
             change_register(input_register, op, op_value)
-        highest_ever = max(highest_ever, max(registers.values()))
+        highest_ever = max(highest_ever, registers[input_register])
     print(max(registers.values()), highest_ever)
 
 
