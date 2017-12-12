@@ -28,12 +28,11 @@ def main():
         targets = [int(item.rstrip(',')) for item in items[2:]]
         mappings[start] = targets
     
-    not_checked = set(mappings.keys())
     reachable = find_group(mappings, 0)
     print(len(reachable))
 
     groups = 1
-    not_checked = not_checked.difference(reachable)
+    not_checked = set(mappings.keys()).difference(reachable)
     while len(not_checked) > 0:
         item = not_checked.pop()
         reachable = find_group(mappings, item)
