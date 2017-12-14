@@ -39,21 +39,3 @@ def knot_hash(input_string):
         l, pos, skip_size = hash_round(l, input_part2, pos, skip_size)
     dense_hash = densify(l)
     return dense_hash
-
-def main():
-    input = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113"
-    input_part1 = [int(n) for n in input.split(',')]
-    l = list(range(256))
-    skip_size = 0
-    pos = 0
-    l, _, _ = hash_round(l, input_part1, pos, skip_size)
-    print(l[0] * l[1])
-
-    # Part2
-    dense_hash = knot_hash(input)
-    fmt = "%02x"*16
-    print(fmt%tuple(dense_hash))
-
-
-if __name__ == '__main__':
-    main()
