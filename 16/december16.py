@@ -12,8 +12,8 @@ def partner(l, a, b):
 def main():
     input = open('december16_input.txt').readline().split(",")
     l = [chr(i) for i in range(ord("a"), ord("q"))]
-    print(part1(l, input))
-    print(part2(l, input))
+    print(part1(l[:], input))
+    print(part2(l[:], input, int(1e9)))
 
 # @profile
 def dance(l, input):
@@ -32,10 +32,10 @@ def dance(l, input):
 def part1(l, input):
     return(''.join(dance(l, input)))
 
-def part2(l, input):
+def part2(l, input, iterations):
     memo = {}
     counter = 0
-    original_list = l.copy()
+    original_list = l[:]
     while True:
         input_string = ''.join(l)
         if input_string in memo:
@@ -46,7 +46,7 @@ def part2(l, input):
             output_string = ''.join(l)
             memo[input_string] = output_string
         counter += 1
-    left = int(1e9) % counter
+    left = int(iterations) % counter
     l = ''.join(original_list)
     for i in range(left):
         l = memo[l]
@@ -56,6 +56,15 @@ def test_part1():
     input = ["s1", "x3/4", "pe/b"]
     l = [c for c in "abcde"]
     assert part1(l, input) == "baedc"
+    assert part2(l, input, int(1e9)) == "abcde"
+
+def test_part2():
+    input = open('december16_input.txt').readline().split(",")
+    l = [chr(i) for i in range(ord("a"), ord("q"))]
+    with_part2 = part2(l[:], input, 100)
+    for _ in range(100):
+        l = dance(l, input)
+    assert with_part2 == ''.join(l)
 
 if __name__ == '__main__':
     main()
