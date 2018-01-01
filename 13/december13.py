@@ -38,6 +38,14 @@ def move_through_layers(layers, delay=0):
             layer.step()
     return caught, severity
 
+def any_lay_at_zero(layers, delay):
+    for i, layer in enumerate(layers):
+        if layer.range_ == 0:
+            continue
+        if (delay + i) % (2 * (layer.range_ - 1)) == 0:
+            return True
+    return False
+
 def gen_layers(input):
     max_index = input[-1][0]
     layers = [Layer(0) for _ in range(max_index + 1)]
@@ -51,12 +59,11 @@ def part1(layers):
 
 def part2(input):
     delay = 0
+    layers = gen_layers(input)
     while True:
-        if delay % 1000 == 0:
+        if delay % 1000000 == 0:
             print(delay)
-        layers = gen_layers(input)
-        caught, _ = move_through_layers(layers, delay)
-        if not caught:
+        if not any_lay_at_zero(layers, delay):
             return delay
         delay += 1
 
